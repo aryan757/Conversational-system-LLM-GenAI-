@@ -1,5 +1,6 @@
 import streamlit as st
-from Data_Management import data_manager
+#from Data_Management import data_manager
+import data_manager
 
 st.title("Movie Ticket Booking System")
 
