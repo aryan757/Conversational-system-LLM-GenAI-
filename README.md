@@ -8,4 +8,5 @@
 4. run (streamlit run app.py)
 5. run (streamlit run pipeline.py)
 
-![Diagram Description](./Low level design)
+![Diagram Description](./Low level design.jpg
+)
