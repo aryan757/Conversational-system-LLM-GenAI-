@@ -8,3 +8,5 @@ tabulate
 python-dotenv==1.0.1
 geocoder
 huggingface_hub
+tensorflow 
+transformers

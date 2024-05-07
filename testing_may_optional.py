@@ -10,6 +10,20 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# Ensure the 'uploaded_images' directory exists
+os.makedirs("uploaded_images", exist_ok=True)
+
+# Function to save uploaded image to local filesystem
+def save_uploaded_file(uploaded_file):
+    try:
+        with open(os.path.join("uploaded_images", uploaded_file.name), "wb") as f:
+            f.write(uploaded_file.getbuffer())
+        return True
+    except Exception as e:
+        st.error(f"An error occurred while saving the file: {e}")
+        return False
+
+
 follow_up_questions = {
     "Child safety": [
         "Child's name",
@@ -131,16 +145,27 @@ def display_follow_up_questions(intent_classification):
 st.title("Police सेवा portal System .")
 
 # Input from user
-user_name = st.text_input("User Name")
-user_phone = st.text_input("User Phone")
+user_name = st.text_input("User Name (Optional)")
+user_phone = st.text_input("User Phone (Optional)")
 user_query = st.text_area("Your Query")
 location_details = geocoder.ip('me').latlng if geocoder.ip('me').latlng is not None else None
+
+
+# Image upload option (clearly marked as optional)
+st.subheader("Upload an Image (Optional)")
+st.text("If you have an image related to the incident, you can upload it here. This step is optional.")
+uploaded_image = st.file_uploader("", type=["jpg", "png", "jpeg"])
 
 # Analyze Query button
 if st.button("Analyze Query"):
     if user_query:
         user_location = f"{location_details[0]}, {location_details[1]}" if location_details else None
         try:
+            if uploaded_image is not None:
+                if save_uploaded_file(uploaded_image):
+                    st.success("Image successfully saved.")
+                else:
+                    st.error("failed to save image.")
             result = analyze_query(user_query, user_location, user_name, user_phone)
             st.subheader("Analysis Results:")
             intent_classification = None

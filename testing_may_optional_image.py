@@ -6,7 +6,8 @@ from langchain.prompts import PromptTemplate
 import os
 import geocoder
 from dotenv import load_dotenv
-
+from transformers import pipeline
+import base64
 
 load_dotenv()
 
@@ -70,6 +71,7 @@ follow_up_questions = {
 }
 
 
+
 # Function to perform sentiment analysis and incident classification
 def analyze_query(user_query, user_location, user_name, user_phone):
     # Access the Hugging Face API token from the environment variable
@@ -114,6 +116,7 @@ def analyze_query(user_query, user_location, user_name, user_phone):
     result = chain.run(user_query=user_query, user_location=user_location, user_name=user_name, user_phone=user_phone)  # Pass user_name and user_phone here
     return result
 
+
 # Function to display follow-up questions based on intent classification
 def display_follow_up_questions(intent_classification):
     if intent_classification in follow_up_questions:
@@ -127,19 +130,31 @@ def display_follow_up_questions(intent_classification):
         return {}
 
 
+# Function to perform image-to-text conversion
+# Function to perform image-to-text conversion
+def perform_image_to_text(image_url):
+    image_to_text = pipeline("image-to-text", model="nlpconnect/vit-gpt2-image-captioning")
+    return image_to_text(image_url)
+
 # Streamlit front-end
 st.title("Police सेवा portal System .")
 
-# Input from user
-user_name = st.text_input("User Name")
-user_phone = st.text_input("User Phone")
+# Input from user - now optional
+user_name = st.text_input("User Name (Optional)")
+user_phone = st.text_input("User Phone (Optional)")
 user_query = st.text_area("Your Query")
+uploaded_image = st.file_uploader("Upload Image", type=["jpg", "jpeg", "png"])
+
+# Fetch and display the user's current location
 location_details = geocoder.ip('me').latlng if geocoder.ip('me').latlng is not None else None
+
+
 
 # Analyze Query button
 if st.button("Analyze Query"):
     if user_query:
         user_location = f"{location_details[0]}, {location_details[1]}" if location_details else None
+        # ... [rest of the code from the first code snippet for analyzing the query]
         try:
             result = analyze_query(user_query, user_location, user_name, user_phone)
             st.subheader("Analysis Results:")
@@ -172,6 +187,29 @@ if st.button("Analyze Query"):
     else:
         st.error("Please enter your query.")
 
+
+# If an image is uploaded, perform image-to-text conversion and sentiment analysis
+if uploaded_image is not None:
+    st.image(uploaded_image, caption='Uploaded Image')
+    image_url = "data:image/png;base64," + base64.b64encode(uploaded_image.read()).decode("utf-8")
+    image_text = perform_image_to_text(image_url)
+    st.subheader("Image-to-Text Conversion:")
+    st.write(image_text)
+
+    # Perform sentiment analysis on the converted text
+    sentiment_result = analyze_query(image_text, None, user_name, user_phone)
+    st.subheader("Sentiment Analysis Result:")
+    st.write(sentiment_result)
+
+    # Save the image and its sentiment to the local system
+    with open('image_data.csv', mode='a', newline='') as file:
+        writer = csv.writer(file)
+        # Write the Base64 encoded image and its sentiment analysis result
+        writer.writerow([base64.b64encode(image_bytes).decode("utf-8"), sentiment_result])
+
+    st.success("Image and sentiment data successfully saved to CSV file.")
+
+
 # If follow-up questions need to be displayed, create input fields for them
 if 'intent_classification' in st.session_state and st.session_state['intent_classification'] in follow_up_questions:
     st.subheader(f"Follow-up Questions for {st.session_state['intent_classification']}")
@@ -191,3 +229,5 @@ if 'intent_classification' in st.session_state and st.session_state['intent_clas
         # Clear the session state after successful submission
         del st.session_state['intent_classification']
         del st.session_state['follow_up_responses']
+
+
