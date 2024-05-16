@@ -38,3 +38,41 @@ aryan ,93043454333,"efesdf
 ,,my 25 year old daughter is in trouble.,Women help desk,Not provided by user,Daughter is in trouble.
 ,,i got hit by car .,Road accident,"""1.2897, 103.8501""",User was hit by a car.
 ,,i got hit by car .,Road accident,"""1.2897, 103.8501""",User was hit by a car.
+,,"i got sick , i need help .",Public healthcare,"Coordinates 1.2897, 103.8501.",User is in need of help due to falling sick.
+,,i hit by car today.,Road accident,"1.2897, 103.8501",user was hit by a car.
+,,my 25 old old daughter is facing some issue.,Issue Recorded,"1.2897, 103.8501]",The user has reported an issue regarding their 25-year-old daughter. The nature of the issue is not clear from the query.
+,,my 25 old old daughter is in trouble.,Issue Recorded,Not provided in the query,"Daughter in trouble, age 25"
+,,my 25 old old daughter is in trouble.,Issue Recorded,Not provided in the query,"Daughter in trouble, age 25"
+,,i am facing some trouble.,issue recorded,"1.2897, 103.8501",
+,,my daughter is in trouble.,"Women help desk, Child safety",Not provided,daughter in trouble
+,,my 25 year daughter is in trouble.,Women help desk,Not specified in the query,Daughter in trouble.
+,,"i saw 2 guys fighting in front of me.
+",incident,"""1.2897, 103.8501""",Two guys fighting.
+,,"i saw 2 guys fighting with knife.
+",Road accident,"1.2897, 103.8501",2 guys fighting with knife. This may imply a physical altercation leading to a road accident. Exercise caution and contact local law enforcement if the situation warrants it.
+,,"i saw 2 guys having gun and threteining.
+",murder / serious crime incident,"1.2897, 103.8501",Two guys with guns threatening.
+,,"i got sick , i need help.",Public healthcare,"1.2897, 103.8501",The user is seeking help related to their health.
+,,i hit by car today.,Road accident,"1.2897, 103.8501",user was hit by a car.
+,,my daughter is in trouble.,"Women help desk, Child safety",Not provided,daughter in trouble
+,,my 25 year daughter is in trouble.,Women help desk,Not specified in the query,Daughter in trouble.
+,,i saw 2 guys fighting in front of me.,Incident Type Unclear,"""User's current location (1.2897, 103.8501)""",
+,,i saw 2 guys fighting in front of me.,Incident Type Unclear,"""User's current location (1.2897, 103.8501)""",
+,,i saw 2 guys having gun and thretening me .,Serious crime incident,"(1.2897, 103.8501)",Two men with guns threatening the user.
+,,i saw 2 guys having gun and threatening me .,murder / serious crime incident,"""1.2897, 103.8501""",Two guys with guns threatening user.
+,,i saw 2 guys having gun and threatening me .,murder / serious crime incident,erw,rew,dsf,dfsf,sdfds,dsfs
+,,i saw 2 guys having gun and threatening me .,murder / serious crime incident,"""1.2897, 103.8501""",Two guys with guns threatening user.
+,,i got hit by car today.,Road accident,"18.5196, 73.8554",
+,,i got fired today.,issue recorded, Not applicable in this scenario,user got fired from their job.
+,,i want help for my daughter.,Women help desk,"User Location (18.5196, 73.8554)",daughter
+,,i am in trouble with a man standing front of me holding gun.,Cyber crime incident,[User Location],"Man with a gun, potential threat to personal safety. It is important to note that the provided user query does not necessarily indicate a cyber crime incident. However, given the potential danger and the fact that no clear category can be determined from the query, it is best to err on the side of caution and treat this as a potential cyber crime incident. The user's location information is included for potential emergency response purposes."
+,,i am in trouble with a man standing front of me holding gun to kill me.,Cyber crime incident,"[user location] ""18.5196, 73.8554""","Man with a gun. This query suggests a potential threat to personal safety, however, the context does not explicitly mention a cyber crime. The term ""trouble"" can be interpreted in multiple ways. The user's location and the mention of a gun indicate a serious situation that might involve physical harm, making it more likely to be a non-cyber crime incident. However, given the ambiguity, this query could also potentially be a cry for help in a cyber-bullying or stalking situation. It's important to follow up with the user and gather more context to determine the actual incident type."
+,,i am in trouble with a man standing front of me holding gun to kill me.,Cyber crime incident,"[user location] ""18.5196, 73.8554""","Man with a gun. This query suggests a potential threat to personal safety, however, the context does not explicitly mention a cyber crime. The term ""trouble"" can be interpreted in multiple ways. The user's location and the mention of a gun indicate a serious situation that might involve physical harm, making it more likely to be a non-cyber crime incident. However, given the ambiguity, this query could also potentially be a cry for help in a cyber-bullying or stalking situation. It's important to follow up with the user and gather more context to determine the actual incident type."
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,Anonymous,Anonymous,i am in trouble with a man standing front of me holding gun to kill me.,Cyber crime incident,dsfd,dsfsd,dsfsd,dsfsd,sdfsdf
+,,my daughter is in trouble.,Women help desk,Not provided in the query.,Daughter in trouble.
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,Anonymous,Anonymous,my daughter is in trouble.,Women help desk,sdfs,sdfsd,dsfsdfds,dsf,hfgfhfgh
+,,my daughter is in trouble.,Women help desk,Not provided in the query.,Daughter in trouble.
+,,my daughter is in trouble.,Child safety,None,The user is expressing concern for their daughter's safety. This matches the child safety category.
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,Anonymous,Anonymous,my daughter is in trouble.,Child safety,,,,,
+,,my daughter is in trouble.,Women help desk,Not provided in the query.,Daughter in trouble.
+,,my daughter is in trouble.,Women help desk,Not provided in the query.,Daughter in trouble.
