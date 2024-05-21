@@ -10,3 +10,4 @@ geocoder
 huggingface_hub
 tensorflow 
 transformers
+mapbox

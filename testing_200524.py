@@ -18,12 +18,16 @@ def set_background_image(url):
     st.markdown(
         f"""
         <style>
-        .stApp {{
+        body {{
             background-image: url("{url}");
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
             background-attachment: fixed;
+        }}
+
+        .reportview-container .main .block-container{{
+            background-color: transparent;
         }}
         </style>
         """,

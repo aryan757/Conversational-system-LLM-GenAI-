@@ -6,13 +6,38 @@ from langchain.prompts import PromptTemplate
 import os
 import geocoder
 from dotenv import load_dotenv
+import streamlit as st
+from mapbox import Geocoder
+
+import streamlit as st
+import os
+from mapbox import Geocoder
+import pandas as pd
 
 load_dotenv()
+
+# Set Mapbox API token
+MAPBOX_API_TOKEN = os.getenv("MAPBOX_API_TOKEN")
+
+
+# Function to geocode location using Mapbox API
+def geocode_location(location):
+    geocoder = Geocoder(access_token=MAPBOX_API_TOKEN)
+    response = geocoder.forward(location)
+    if response.status_code == 200:
+        data = response.json()
+        if data['features']:
+            coordinates = data['features'][0]['geometry']['coordinates']
+            return coordinates[1], coordinates[0]  # Latitude, Longitude
+    return None, None
+
 
 # Ensure the 'uploaded_images' directory exists
 os.makedirs("uploaded_images", exist_ok=True)
 
 # ... (rest of the code)
+
+
 
 def set_background_image(url):
     st.markdown(
@@ -44,8 +69,7 @@ follow_up_questions = {
         "Description of the incident",
         "Date and time of the incident",
         "Any known suspects or source of the attack",
-        "Account number (if bank involved)(Optional)",
-        "Bank details (Name,Branch,IFSC code.)(Optional)"
+        "Steps already taken"
     ],
     "Women help desk": [
         "Nature of the incident",
@@ -161,14 +185,18 @@ def display_follow_up_questions(intent_classification):
         st.warning("No follow-up questions for the given intent classification.")
         return {}
 
+
 # Streamlit front-end
-st.title("Police सेवा portal System .")
+st.title("Police सेवा Portal System")
 
 # Input from user
 user_name = st.text_input("User Name (Optional)")
 user_phone = st.text_input("User Phone (Optional)")
 user_query = st.text_area("Your Query")
-location_details = geocoder.ip('me').latlng if geocoder.ip('me').latlng is not None else None
+
+# Display map to select current location
+st.subheader("Select Your Current Location")
+current_location = st.map(use_container_width=True)
 
 # Image upload option (clearly marked as optional)
 st.subheader("Upload an Image (Optional)")
@@ -177,11 +205,9 @@ uploaded_image = st.file_uploader("", type=["jpg", "png", "jpeg"])
 
 # Option for User Anonymity
 anonymous_option = st.checkbox("Keep my identity and information anonymous")
-
-# Analyze Query button
 if st.button("Analyze Query"):
     if user_query:
-        user_location = f"{location_details[0]}, {location_details[1]}" if location_details else None
+        user_location = None  # Change to the location selected on the map
         try:
             if uploaded_image is not None:
                 if save_uploaded_file(uploaded_image):
@@ -225,56 +251,3 @@ if st.button("Analyze Query"):
                 
         except ValueError as e:
             st.error(e)
-
-# If follow-up questions need to be displayed, create input fields for them
-if 'intent_classification' in st.session_state and st.session_state['intent_classification'] in follow_up_questions:
-    st.subheader(f"Follow-up Questions for {st.session_state['intent_classification']}")
-    for question in follow_up_questions[st.session_state['intent_classification']]:
-        st.session_state['follow_up_responses'][question] = st.text_input(question,key=question)
-
-if st.button("Submit Follow-up Information"):
-    # Handle the submission of follow-up information
-    csv_filename = "anonymous_data.csv" if anonymous_option else "user_data.csv"
-    with open(csv_filename, mode='a', newline='') as file:
-        writer = csv.writer(file)
-        writer.writerow([
-            user_name, user_phone, user_query,
-            st.session_state['intent_classification'],
-            *st.session_state['follow_up_responses'].values()
-        ])
-    st.success("Follow-up data successfully saved to CSV file.")
-    # Clear the session state after successful submission
-    del st.session_state['intent_classification']
-    del st.session_state['follow_up_responses']
-
-
-# Authentication
-USERNAME = "admin"
-PASSWORD = "password"
-
-# Authentication UI
-login = st.sidebar.checkbox("Login", False)
-if login:
-    username = st.sidebar.text_input("Username")
-    password = st.sidebar.text_input("Password", type="password")
-    if st.sidebar.button("Login"):
-        if username == USERNAME and password == PASSWORD:
-            st.sidebar.success("Logged in as admin")
-            st.session_state["authenticated"] = True  # Set authenticated state
-            show_data = st.sidebar.checkbox("Show Anonymous Data")
-            if show_data:
-                data_filename = "anonymous_data.csv"
-                if os.path.exists(data_filename):
-                    if st.session_state.get("authenticated"):  # Check authenticated state
-                        with open(data_filename, mode='r') as file:
-                            data = file.read()
-                        st.subheader("Anonymous Data")
-                        st.write(data)
-                    else:
-                        st.warning("You are not authenticated to view this data.")
-                else:
-                    st.warning("No anonymous data available.")
-        else:
-            st.sidebar.error("Incorrect username or password")
-else:
-    st.warning("You need to log in to access this feature.")

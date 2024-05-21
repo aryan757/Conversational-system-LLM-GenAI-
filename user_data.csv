@@ -76,3 +76,31 @@ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,Anonymous,Anony
 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,Anonymous,Anonymous,my daughter is in trouble.,Child safety,,,,,
 ,,my daughter is in trouble.,Women help desk,Not provided in the query.,Daughter in trouble.
 ,,my daughter is in trouble.,Women help desk,Not provided in the query.,Daughter in trouble.
+,,my daughter is in trouble.,women help desk,"""User Location"" (18.5196, 73.8554)","""my daughter is in trouble"""
+,,my daughter is in trouble.,women help desk,"""User Location"" (18.5196, 73.8554)","""my daughter is in trouble"""
+,,my mother got hit by car today in the evening.,Road accident,The user's mother was hit by a car. Assuming the location mentioned by the user is the location of the accident.,The mother was involved in a road accident in the evening.
+,,my mother got hit by car today in the evening.,Road accident,sdfsd,jioho,hjkhgkg,ghjhgjh,gjghj]
+,,i got sick today.,Public healthcare,"(User Location) ""18.5196, 73.8554""",User reported feeling sick.
+,,i got sick today.,Public healthcare,gfhfg,gfdg,fdgdfg,fghdfhgfh,gfhfghf
+,,i got sick today.,Public healthcare,"(User Location) ""18.5196, 73.8554""",User reported feeling sick.
+,,i got sick today.,Public healthcare,sdfsdf,turtu,hgjghj,ghjghjgh,gjghjgh
+,,my account got hacked toaday.,Cyber crime incident,Not provided,Account hacked.
+,,my account got hacked toaday.,Cyber crime incident,ewrwer,fsdfgsd,fdgdf,fghfgh,fdgdfg
+,,my daughter is in trouble.,Women help desk,[User Location],daughter in trouble
+,,my daughter is in trouble.,Women help desk,fdsfs,hjgjgh,gfhfghfgh,fgjfgjgfjfgjfgj,fhfghgfh
+,,i got hit by car today.,Road accident,"""12.9791011, 77.5913005""",The user has been involved in a road accident.
+,,my daughter is in trouble.,Women help desk,Not provided by the user,Daughter in trouble.
+,,my parents got hit by car today.,Road accident,"The location is not mentioned in the query. Please provide more details if possible, such as city or street name.",The user reports that their parents have been involved in a car accident.
+,,my parents got hit by car today.,Road accident,fsdfsdfsd,fsdfsdfsdf,sdgsdgsd,sdgsdg,sdgsdg
+,,"
+",Road accident,3rd Avenue and Maple Street.,"Car accident, injuries."
+,,i got sick today.,Public healthcare,Not available in the user query.,"The user has mentioned that they are sick, indicating a need for medical assistance. This falls under the public healthcare category."
+,,i got sick today.,Public healthcare,Not available in the user query.,"The user has mentioned that they are sick, indicating a need for medical assistance. This falls under the public healthcare category."
+,,i got sick today.,Public healthcare,User's current location (if available) or user provided location (if mentioned),"User is reporting an illness, which may require medical attention."
+,,my daughter is in trouble.,Women help desk,Daughter's location (to be determined),Daughter in trouble.
+,,"my leg is broken , i need help.",road accident,"(18.5196, 73.8554)",The user has reported a road accident and needs help. They have specified their location. No other details have been provided in the query.
+,,"my leg is broken by an accident, i need help.",Road accident,"18.5196, 73.8554",The user has been involved in a road accident and has a broken leg. They require help.
+,,"my leg is broken by an accident, i need help.",Road accident,sdfsfsd,dsfsdf,sdfsdfs,dsfdsf,dfsdfsd
+,,my card got blocked by thrid party.,Cyber crime incident,Not specified in the user query.,"The user mentioned that their card got blocked by a third party, which indicates a potential cybercrime incident."
+,,"i got a very bad headache today , need help.",Public healthcare,"Not provided, current location is (18.5196, 73.8554)",User is experiencing a headache and is seeking help.
+,,my account got hacked.,Cyber crime incident,Not mentioned in the query.,User reported that their account has been hacked.

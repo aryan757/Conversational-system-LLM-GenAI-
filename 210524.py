@@ -6,6 +6,8 @@ from langchain.prompts import PromptTemplate
 import os
 import geocoder
 from dotenv import load_dotenv
+from streamlit_folium import st_folium
+import folium
 
 load_dotenv()
 
@@ -15,20 +17,20 @@ os.makedirs("uploaded_images", exist_ok=True)
 # ... (rest of the code)
 
 def set_background_image(url):
-    st.markdown(
-        f"""
-        <style>
-        .stApp {{
-            background-image: url("{url}");
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+    css_style = f"""
+    <style>
+    .stApp {{
+        background-image: url("{url}");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }}
+    </style>
+    """
+    print("Injecting CSS for background image:", css_style)  # Debugging print
+    st.markdown(css_style, unsafe_allow_html=True)
+
 
 
 follow_up_questions = {
@@ -105,6 +107,14 @@ def save_uploaded_file(uploaded_file):
         st.error(f"An error occurred while saving the file: {e}")
         return False
 
+# Function to display an interactive map and capture a location
+def display_map(key):
+    st.subheader("Select Location on Map")
+    m = folium.Map(location=[45.5236, -122.6750], zoom_start=13)
+    location = st_folium(m, key=key)
+    return location
+
+
 # Function to perform sentiment analysis and incident classification
 def analyze_query(user_query, user_location, user_name, user_phone):
     # Access the Hugging Face API token from the environment variable
@@ -161,6 +171,7 @@ def display_follow_up_questions(intent_classification):
         st.warning("No follow-up questions for the given intent classification.")
         return {}
 
+
 # Streamlit front-end
 st.title("Police सेवा portal System .")
 
@@ -168,7 +179,15 @@ st.title("Police सेवा portal System .")
 user_name = st.text_input("User Name (Optional)")
 user_phone = st.text_input("User Phone (Optional)")
 user_query = st.text_area("Your Query")
-location_details = geocoder.ip('me').latlng if geocoder.ip('me').latlng is not None else None
+
+# Display map for present location
+st.subheader("Present Location (Optional)")
+present_location = display_map(key="present_location")
+
+# Display map for incident location
+st.subheader("Incident Location")
+incident_location = display_map(key="incident_location")
+
 
 # Image upload option (clearly marked as optional)
 st.subheader("Upload an Image (Optional)")
@@ -181,7 +200,9 @@ anonymous_option = st.checkbox("Keep my identity and information anonymous")
 # Analyze Query button
 if st.button("Analyze Query"):
     if user_query:
-        user_location = f"{location_details[0]}, {location_details[1]}" if location_details else None
+         # Use the selected locations from the map
+        user_present_location = f"{present_location['last_clicked']['lat']}, {present_location['last_clicked']['lng']}" if present_location else None
+        user_incident_location = f"{incident_location['last_clicked']['lat']}, {incident_location['last_clicked']['lng']}" if incident_location else None
         try:
             if uploaded_image is not None:
                 if save_uploaded_file(uploaded_image):
@@ -213,7 +234,7 @@ if st.button("Analyze Query"):
                 writer = csv.writer(file)
                 writer.writerow([
                     user_name, user_phone, user_query,
-                    intent_classification, location, other_details
+                    intent_classification, user_present_location, user_incident_location
                 ])
                 
             st.success("Data successfully saved to CSV file.")
