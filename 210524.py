@@ -9,6 +9,9 @@ from dotenv import load_dotenv
 from streamlit_folium import st_folium
 import folium
 from geopy.geocoders import Nominatim  # Make sure to include this import
+from streamlit_folium import folium_static
+import folium
+
 
 load_dotenv()
 
@@ -117,6 +120,20 @@ def display_map(location, key):
     folium_map = st_folium(m, key=key)
     return folium_map
 
+# Function to display map and get location from user
+def get_location_from_map(prompt, initial_coords=(0, 0), zoom_start=2):
+    st.subheader(prompt)
+    m = folium.Map(location=initial_coords, zoom_start=zoom_start)
+    # Create a draggable marker
+    marker = folium.Marker(
+        initial_coords,
+        draggable=True
+    )
+    marker.add_to(m)
+    # Display the map with the marker
+    folium_static(m)
+    # Return the location of the marker (this part requires additional logic to capture the marker's location)
+    return initial_coords  # Placeholder for the actual location captured from the marker
 
 # Function to geocode an address input by the user
 def geocode_address(address):
@@ -194,22 +211,16 @@ user_phone = st.text_input("User Phone (Optional)")
 user_query = st.text_area("Your Query")
 
 
+# Map for current location
+st.subheader("Current Location (Optional)")
+st.text("You can pinpoint your current location on the map. This step is optional.")
+current_location = get_location_from_map("Pinpoint your current location:", geocoder.ip('me').latlng if geocoder.ip('me').latlng else [20, 78], 4)
 
-# Input fields for addresses
-current_address = st.text_input("Current Location Address")
-incident_address = st.text_input("Incident Location Address")
+# Map for incident location
+st.subheader("Incident Location")
+st.text("Please pinpoint the incident location on the map.")
+incident_location = get_location_from_map("Pinpoint the incident location:", [20, 78], 4)
 
-# Buttons to locate and adjust the addresses on the map
-current_location = None
-incident_location = None
-if st.button("Locate Current Address"):
-    current_location = geocode_address(current_address)
-if st.button("Locate Incident Address"):
-    incident_location = geocode_address(incident_address)
-
-# Display maps for the user to adjust the marker if necessary
-current_map = display_map(current_location, "current") if current_location else None
-incident_map = display_map(incident_location, "incident") if incident_location else None
 
 
 # Image upload option (clearly marked as optional)
@@ -223,9 +234,9 @@ anonymous_option = st.checkbox("Keep my identity and information anonymous")
 # Analyze Query button
 if st.button("Analyze Query"):
     if user_query:
-        # Extract coordinates from the map markers
-        current_lat_lon = (current_map['last_clicked']['lat'], current_map['last_clicked']['lng']) if current_map and 'last_clicked' in current_map else None
-        incident_lat_lon = (incident_map['last_clicked']['lat'], incident_map['last_clicked']['lng']) if incident_map and 'last_clicked' in incident_map else None
+               # Convert the map locations to strings to pass to the analyze_query function
+        user_current_location = f"{current_location[0]}, {current_location[1]}"
+        user_incident_location = f"{incident_location[0]}, {incident_location[1]}"
         try:
             if uploaded_image is not None:
                 if save_uploaded_file(uploaded_image):
@@ -257,7 +268,7 @@ if st.button("Analyze Query"):
                 writer = csv.writer(file)
                 writer.writerow([
                     user_name, user_phone, user_query,
-                    intent_classification, current_lat_lon, incident_lat_lon
+                    intent_classification, location, other_details
                 ])
                 
             st.success("Data successfully saved to CSV file.")
