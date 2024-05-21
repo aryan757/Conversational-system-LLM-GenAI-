@@ -12,13 +12,10 @@ from geopy.geocoders import Nominatim  # Make sure to include this import
 from streamlit_folium import folium_static
 import folium
 
-
 load_dotenv()
 
 # Ensure the 'uploaded_images' directory exists
 os.makedirs("uploaded_images", exist_ok=True)
-
-# ... (rest of the code)
 
 def set_background_image(url):
     css_style = f"""
@@ -32,10 +29,7 @@ def set_background_image(url):
     }}
     </style>
     """
-    print("Injecting CSS for background image:", css_style)  # Debugging print
     st.markdown(css_style, unsafe_allow_html=True)
-
-
 
 follow_up_questions = {
     "Child safety": [
@@ -101,7 +95,7 @@ follow_up_questions = {
 background_image_url = 'https://weststreetwillyseatery.com/wp-content/uploads/2016/03/Top-10-best-Simple-Awesome-Background-Images-for-Your-Website-or-Blog2.jpg'
 set_background_image(background_image_url)
 
-# Function to save uploaded image to local filesystem
+# Function to save uploaded file to local filesystem
 def save_uploaded_file(uploaded_file):
     try:
         with open(os.path.join("uploaded_images", uploaded_file.name), "wb") as f:
@@ -201,7 +195,6 @@ def display_follow_up_questions(intent_classification):
         st.warning("No follow-up questions for the given intent classification.")
         return {}
 
-
 # Streamlit front-end
 st.title("Police सेवा portal System .")
 
@@ -209,7 +202,6 @@ st.title("Police सेवा portal System .")
 user_name = st.text_input("User Name (Optional)")
 user_phone = st.text_input("User Phone (Optional)")
 user_query = st.text_area("Your Query")
-
 
 # Map for current location
 st.subheader("Current Location (Optional)")
@@ -220,8 +212,6 @@ current_location = get_location_from_map("Pinpoint your current location:", geoc
 st.subheader("Incident Location")
 st.text("Please pinpoint the incident location on the map.")
 incident_location = get_location_from_map("Pinpoint the incident location:", [20, 78], 4)
-
-
 
 # Image upload option (clearly marked as optional)
 st.subheader("Upload an Image (Optional)")
@@ -234,7 +224,7 @@ anonymous_option = st.checkbox("Keep my identity and information anonymous")
 # Analyze Query button
 if st.button("Analyze Query"):
     if user_query:
-               # Convert the map locations to strings to pass to the analyze_query function
+        # Convert the map locations to strings to pass to the analyze_query function
         user_current_location = f"{current_location[0]}, {current_location[1]}"
         user_incident_location = f"{incident_location[0]}, {incident_location[1]}"
         try:
@@ -249,9 +239,12 @@ if st.button("Analyze Query"):
             else:
                 # Save to user_data.csv if user does not choose anonymity
                 csv_filename = "user_data.csv"
-            result = analyze_query(user_query, user_location, user_name, user_phone)
+            result = analyze_query(user_query, user_incident_location, user_name, user_phone)  # Pass user_incident_location as user_location
             st.subheader("Analysis Results:")
             intent_classification = None
+            location = None
+            other_details = None
+
             for line in result.split("\n"):
                 if "Intent Classification:" in line:
                     intent_classification = line.split(": ")[-1].strip()
@@ -285,7 +278,7 @@ if st.button("Analyze Query"):
 if 'intent_classification' in st.session_state and st.session_state['intent_classification'] in follow_up_questions:
     st.subheader(f"Follow-up Questions for {st.session_state['intent_classification']}")
     for question in follow_up_questions[st.session_state['intent_classification']]:
-        st.session_state['follow_up_responses'][question] = st.text_input(question,key=question)
+        st.session_state['follow_up_responses'][question] = st.text_input(question, key=question)
 
 if st.button("Submit Follow-up Information"):
     # Handle the submission of follow-up information
@@ -301,7 +294,6 @@ if st.button("Submit Follow-up Information"):
     # Clear the session state after successful submission
     del st.session_state['intent_classification']
     del st.session_state['follow_up_responses']
-
 
 # Authentication
 USERNAME = "admin"
@@ -333,3 +325,4 @@ if login:
             st.sidebar.error("Incorrect username or password")
 else:
     st.warning("You need to log in to access this feature.")
+
