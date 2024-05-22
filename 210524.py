@@ -93,7 +93,7 @@ follow_up_questions = {
 
 # Set the background image (use a URL or local path)
 background_image_url = 'https://weststreetwillyseatery.com/wp-content/uploads/2016/03/Top-10-best-Simple-Awesome-Background-Images-for-Your-Website-or-Blog2.jpg'
-set_background_image(background_image_url)
+#set_background_image(background_image_url)
 
 # Function to save uploaded file to local filesystem
 def save_uploaded_file(uploaded_file):
