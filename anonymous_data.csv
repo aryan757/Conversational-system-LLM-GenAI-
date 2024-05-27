@@ -37,3 +37,16 @@ sadasda
 ",Public healthcare,Not provided,"User is not feeling well and is seeking help, implying a request for healthcare services."
 ,,i am in trouble needs medicines.,Public healthcare,User's current location is not mentioned in the query. It is important to contact the user to get their location details for providing appropriate assistance.,User is in need of medicines.
 ,,my daughter is in trouble.,women help desk,home or specific address if mentioned,daughter in trouble.
+,,i got involved in car accident today.,Road accident,Not specified in the query,User was involved in a car accident on today's date.
+,,i got involved in car accident today.,Road accident,yes,sdas,sadda,asdas,sdasd
+,,i got involved in car accident today.,Road accident,Not specified in the query,User was involved in a car accident on today's date.
+,,i feel down from strais need ambulance.,Public healthcare,,
+,,i feel down from strais need ambulance.,Public healthcare,fsdf,fsdf,yutyu,fhghfg,fdgdfg
+,,my card got blocked today seems suspicious.,Cyber crime incident,,
+,,my card got blocked today seems suspicious.,Cyber crime incident,ssas,dsfsd,fdgfd,hfhfg,fghfg,dsfdsf
+,,i got into an accident today.,Road accident,,
+,,"my friend is sick , needs help.",Women help desk,,
+,,"my friend is sick , needs help from hospital.",Public healthcare,,
+,,"my friend is sick , needs help from hospital.",Public healthcare,,,,sadsa,sadsa
+,,my 25 year old daughter is in trouble.,Women help desk,,
+,,my 25 year old daughter is in trouble.,Women help desk,,,,,

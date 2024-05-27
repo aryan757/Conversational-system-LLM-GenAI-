@@ -166,3 +166,32 @@ prateek ,92439324234,my daughter is in trouble.,women help desk,Unknown (could b
 ,,my daughter is in trouble.,women help desk,home or specific address if mentioned,daughter in trouble.
 ,,my daughter is in trouble.,women help desk,home or specific address if mentioned,daughter in trouble.
 ,,i got involved into an accident,Road accident,Not provided in the query,User mentioned involvement in an accident.
+,,my daughter is in trouble.,women help desk,Not provided in the query.,Daughter in trouble.
+,,i got into trouble today with a man pointing gun on me .,murder / serious crime incident,Not specified in the query.,The user was involved in a potential life-threatening situation with an armed man. This is a serious crime incident and it's important to contact local law enforcement immediately for assistance.
+,,i got hit by car today.,murder / serious crime incident,Maple Street,"[Additional details related to the incident, e.g., ""victim's name, suspect"
+,,i got car accident today near cubbon park.,Road accident,Cubbon Park.,
+,,i got involved in car accident today.,Road accident,Not specified in the query,User was involved in a car accident on today's date.
+,,i saw 2 murder today.,murder / serious crime incident,"[Current Location], [City], [Country]",2 murders occurred at the current location.
+,,my 26 year old daughter fainted near block d.,"Women help desk, Child safety",Block D,"The user's 26-year-old daughter fainted near Block D. This might be a child safety issue, and it is recommended to contact the women help desk for assistance."
+,,my 26 year old daughter fainted near block d.,"Women help desk, Child safety",Block D,"The user's 26-year-old daughter fainted near Block D. This might be a child safety issue, and it is recommended to contact the women help desk for assistance."
+,,i got involved in accident today by truck.,Road accident,Not specified in the query.,The user was involved in a road accident with a truck.
+,,my credit card got hacked today.,Cyber crime incident,"""N/A"" (since there is no location mentioned in the query)","""credit card got hacked"""
+,,my daughter is in trouble.,"Women help desk, child safety",Home or school (depending on context),"Daughter is in trouble, possibly requiring help or protection."
+,,i am in trouble.,Issue Recorded,Unknown,None
+,,i need medicle help,Public healthcare,Not provided,User is seeking medical help.
+,,i need medicle help,Public healthcare,jondish,,sdsa,sadasd,sdaasdasdasdasd
+,,i got involved in car accident today.,Road accident,Not specified in the query,User was involved in a car accident on today's date.
+,,i got involved in car accident today.,Road accident,cubbon park,,,yes,
+,,i got involved in car accident today.,Road accident,Not specified in the query,User was involved in a car accident on today's date.
+,,i got involved in car accident today.,Road accident,cubbon park,now,3,yes,yes'
+,,my daughter is in trouble.,"Women help desk, child safety"
+,,my daughter is in trouble.,
+,,my daughter is in trouble.,
+,,my daughter is in trouble.,"Women help desk, child safety"
+,,i got into medical emergency now.,,,
+,,i got into medical emergency now.,
+,,my daughter is in trouble.,,,
+,,my daughter saw 2 murder today.,murder / serious crime incident,home or specific address if provided in query,daughter witnessed a murder.
+,,my daughter saw 2 murder today.,murder / serious crime incident,edwf,ytutu,iyuiyu,uyiyui,yuiyui,u8oiuo
+,,my daughter saw 2 murder today.,murder / serious crime incident,home or specific address if provided in query,daughter witnessed a murder.
+,,my daughter saw 2 murder today in cubbon park,murder / serious crime incident,Cubbon Park.,
