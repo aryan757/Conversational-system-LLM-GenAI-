@@ -11,3 +11,5 @@ huggingface_hub
 tensorflow 
 transformers
 mapbox
+geopy
+streamlit_folium
