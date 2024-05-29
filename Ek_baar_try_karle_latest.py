@@ -15,6 +15,9 @@ os.makedirs("uploaded_images", exist_ok=True)
 # Initialize session state
 if 'chat_history' not in st.session_state:
     st.session_state.chat_history = []
+    st.session_state.follow_up_index = 0
+    st.session_state.follow_up_responses = {}
+
 
 follow_up_questions = {
     "Child safety": [
@@ -128,43 +131,47 @@ def analyze_query(user_query, user_name, user_phone):
     result = chain.run(user_query=user_query, user_name=user_name, user_phone=user_phone)
     return result
 
-    
 def display_follow_up_questions(intent_classification):
     if intent_classification in follow_up_questions:
         questions = follow_up_questions[intent_classification]
-        follow_up_responses = {}
 
-        for i, question in enumerate(questions, start=1):
-            st.write(f"Question {i}:")
-            user_input = st.text_input(question, key=f"follow_up_{intent_classification}_{i}")
+        # Only proceed if there are more questions to ask
+        if st.session_state.follow_up_index < len(questions):
+            question = questions[st.session_state.follow_up_index]
+            st.write(f"Bot: {question}")
+            user_input = st.text_input("You:", key=f"follow_up_{intent_classification}_{question}")
 
             if user_input:
-                follow_up_responses[question] = user_input
+                st.session_state.follow_up_responses[question] = user_input
                 st.session_state.chat_history.append(message(user_input, is_user=True))
-                st.session_state.chat_history.append(message(question))
+                st.session_state.chat_history.append(message(question, is_user=False))
+                st.session_state.follow_up_index += 1
 
-        if follow_up_responses:
-            return follow_up_responses
-        else:
-            st.warning("No follow-up questions answered.")
-            return {}
+                # Reset the input box so the next question can be asked
+                st.experimental_rerun()
+
+        # If all questions have been asked, return the responses
+        if st.session_state.follow_up_index == len(questions):
+            return st.session_state.follow_up_responses
     else:
         st.warning("No follow-up questions for the given intent classification.")
         return {}
 
-
 # Streamlit front-end
 st.title("Police सेवा portal System (Conversational)")
 
+
+
 # Display greeting message
-st.session_state.chat_history.append(message("Hello! Welcome to the Police सेवा portal System. How can I assist you today?", is_user=False))
+if not st.session_state.chat_history:
+    st.session_state.chat_history.append(message("Hello! Welcome to the Police सेवा portal System. How can I assist you today?", is_user=False))
 
 # Display chat history
 for chat_message in st.session_state.chat_history:
     st.write(chat_message)
 
 # Input from user
-user_input = st.text_input("Your Query", key="user_input")
+user_input = st.text_input("You:", key="user_input")
 
 # Option for User Anonymity
 anonymous_option = st.checkbox("Keep my identity and information anonymous")
@@ -174,7 +181,9 @@ st.subheader("Upload an Image (Optional)")
 st.text("If you have an image related to the incident, you can upload it here. This step is optional.")
 uploaded_image = st.file_uploader("", type=["jpg", "png", "jpeg"])
 
-if user_input:
+
+
+if user_input and not st.session_state.get('intent_classification'):
     st.session_state.chat_history.append(message(user_input, is_user=True))
 
     try:
@@ -185,7 +194,7 @@ if user_input:
                 st.error("Failed to save image.")
 
         result = analyze_query(user_input, "", "")
-        st.session_state.chat_history.append(message(result))
+        st.session_state.chat_history.append(message(result, is_user=False))
 
         intent_classification = None
         location = None
@@ -194,6 +203,15 @@ if user_input:
         for line in result.split("\n"):
             if "Intent Classification:" in line:
                 intent_classification = line.split(": ")[-1].strip()
+            elif "Location:" in line:
+                location = line.split(": ")[-1].strip()
+            elif "Other Details:" in line:
+                other_details = line.split(": ")[-1].strip()
+
+        # Store the extracted details in session state
+        st.session_state.intent_classification = intent_classification
+        st.session_state.location = location
+        st.session_state.other_details = other_details
 
         # Write data to CSV file
         csv_filename = "anonymous_data.csv" if anonymous_option else "user_data.csv"
@@ -201,27 +219,38 @@ if user_input:
             writer = csv.writer(file)
             writer.writerow([
                 "", "", user_input,
-                intent_classification, location, other_details
+                st.session_state.intent_classification,
+                st.session_state.location,
+                st.session_state.other_details
             ])
         st.success("Data successfully saved to CSV file.")
 
-        # If an intent classification is present, display follow-up questions
-        if intent_classification and intent_classification in follow_up_questions:
-            follow_up_responses = display_follow_up_questions(intent_classification)
+        # If an intent classification is present, start displaying follow-up questions
+        if st.session_state.intent_classification and st.session_state.intent_classification in follow_up_questions:
+            display_follow_up_questions(st.session_state.intent_classification)
 
-            # Write follow-up data to CSV file
-            if follow_up_responses:
-                with open(csv_filename, mode='a', newline='') as file:
-                    writer = csv.writer(file)
-                    writer.writerow([
-                        "", "", user_input,
-                        intent_classification,
-                        *follow_up_responses.values()
-                    ])
-                st.success("Follow-up data successfully saved to CSV file.")
-                st.success("Thank you for providing the necessary details. We will look into the matter and take appropriate action.")
-
-            else:
-                st.success("Thank you for reaching out. We appreciate you reporting this incident.")
     except ValueError as e:
         st.error(e)
+elif st.session_state.get('intent_classification') and st.session_state.follow_up_index < len(follow_up_questions[st.session_state.intent_classification]):
+    # Continue asking follow-up questions
+    display_follow_up_questions(st.session_state.intent_classification)
+elif st.session_state.get('intent_classification') and st.session_state.follow_up_index >= len(follow_up_questions[st.session_state.intent_classification]):
+    # All follow-up questions have been answered
+    follow_up_responses = st.session_state.follow_up_responses
+    # Write follow-up data to CSV file
+    csv_filename = "anonymous_data.csv" if anonymous_option else "user_data.csv"
+    with open(csv_filename, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([
+            "", "", user_input,
+            st.session_state.intent_classification,
+            *follow_up_responses.values()
+        ])
+    st.success("Follow-up data successfully saved to CSV file.")
+    st.success("Thank you for providing the necessary details. We will look into the matter and take appropriate action.")
+    # Reset follow-up state for the next conversation
+    st.session_state.follow_up_index = 0
+    st.session_state.follow_up_responses = {}
+    st.session_state.intent_classification = None
+else:
+    st.success("Thank you for reaching out. We appreciate you reporting this incident.")
