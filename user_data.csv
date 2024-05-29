@@ -252,3 +252,78 @@ prateek ,92439324234,my daughter is in trouble.,women help desk,Unknown (could b
 ,,i need medical emergency,Public healthcare,dcsdc,sdfsdf,sdfsdf,sdfsdfdsf,dsfsdsdfsd
 ,,i need medical emergency,Public healthcare,Not provided in the query. Please ask for the location or address if possible.,Medical emergency.
 ,,my child needs help.,Child safety,,
+,,i need medical emergency,Public healthcare,Nearest emergency room,"N/A"""
+,,i need medical emergency,Public healthcare,sdfdsf,sdfdsf,dsfsdf,dsfdsf,dsfdsf
+,,i need medical emergency,Public healthcare,Nearest emergency room,"N/A"""
+,,i need medical emergency,Public healthcare,dsfdsf,dsfdsf,sdfdsf,dsfsf,dsfsdf
+,,my daughter is in trouble.,"Women help desk, child safety",Home or specific location if mentioned,"Daughter's age, nature of trouble if available."
+,,child is not safe,child safety,<Unknown>,A user has expressed concern about a child's safety.
+,,my child is not safe.,Child safety,Not provided in the query,The user has expressed concern for their child's safety.
+,,my child is not safe.,Child safety,revannt,dsfsd,sadfasf,sdfsdf,sdfdsf
+,,my mother needs help.,issue recorded,unable to determine,user's mother needs help.
+,,my mother needs help.,issue recorded,she broke her leg,dsfsd,yes,dsfsdf
+,,i need help for my mother.,Women help desk,Home,mother in need of help.
+,,i need help for my mother.,Women help desk,she broke her leg.,dsfdsf,dsfsd,sdfsdf,sdfdsf
+,,my card got blocked.,Cyber crime incident,Not provided in the query.,Credit card.
+,,my card got blocked.,Cyber crime incident,yes,dsfds,sdfds,dsfds,sdfsd,dsfsd
+,,my card got blocked.,Cyber crime incident,Not provided in the query.,Credit card.
+,,my card got blocked.,Cyber crime incident,Not provided in the query.,Credit card.
+,,my card got blocked.,Cyber crime incident,asdfsdf,dsfsdfsdf,dsfdsfsd,dsfdsfsd,dfdsfdsf,fsdsdf
+,, i need help for my mother.,Women help desk,Home,Mother in need of help.
+,,my card got blocked.,Cyber crime incident,Not provided in the query.,Credit card.
+,,my card got blocked.,Cyber crime incident,edsef,dcsfdf,dsfsdf,sdfsdf,dsfsdfsd,dsfdsf
+,,my card got blocked.,,,
+,,i need help for my mother.,Women help desk,Home,Mother in need of help.
+,,i need help for my mother.,Women help desk,dsfsdf,sdfsdf,dsfdsfsdf,Skipped,dsfdsf
+,,my card got blocked.,,,
+,,my card got blocked seems suspicious,Cyber crime incident,Not provided in the user query,The user suspects that their card has been blocked due to suspicious activity. This is indicative of a potential cyber crime incident.
+,,i need help for my mother.,Women help desk,Home,Mother in need of help.
+,,i need help for my mother.,Women help desk,dsfdsfdsfdsffffffffffff,dsfsdfdsf,dsfdsfsdfsdfs,dsfdsfsdfsdfsdfsd,dsfdfsdfdsfsdfdsf
+,,i need help for my mother.,Women help desk,Home,Mother in need of help.
+,,i need help for my mother.,Women help desk,dsfsdf,sdfsdfsdfsdfsd,sdfdsfsdfdsfsdfdsfdsf,sdfsdfdsfds,dsfdsfsdf
+,,i need help for my mother.,Women help desk,Home,Mother in need of help.
+,,i need help for my mother.,Women help desk,adsaa ,dsfsdfdsf,dsfdsfsdf,dsfdsfsd,dsfdsfsdf
+,,i need help for my mother.,Women help desk,Home,Mother in need of help.
+,,i need help for my mother.,Women help desk,sefdsf,fsdfdf,sdfsdfsdf,sdfsdf,sdfsdf
+,,i need help for my mother.,Women help desk,Home,Mother in need of help.
+,,i need help for my mother.,Women help desk,sdfsdfsd,dsfsdf,sdfsdfsd,dsfsdfsd,dsfdsfsd
+,,my child is not safe.,Child Safety,home or specific location mentioned by user,child's safety concern.
+,,my house catches fire.,Fire accident,User's house,Fire incident reported. User requires emergency assistance.
+,,my house catches fire.,Fire accident,sdfdsfdsfs,dsfsdfsd,sdfsdfdsf,dsfdsfsdf,dsfsdfsd
+,,my child is not safe.,Child Safety,home or specific location mentioned by user,child's safety concern.
+,,my daughter is in trouble.,Women help desk or Child safety,Not specified,daughter in trouble.
+,,my mother needs help.,Women help desk,Home,Mother in need of help.
+,,my child is not safe.,Child Safety,home or specific location mentioned by user,child's safety concern.
+,,my child is not safe.,Child safety,home,child safety concern.
+,,my child is not safe.,Child safety,ramu kaka,90,sdffsd,sdfsdfsd,Skipped
+,,my daughter is in trouble.,Women help desk or Child safety,Home or School,Daughter in trouble.
+,,my daughter is in trouble with illness.,Public healthcare,home,"illness, daughter."
+,,my daughter is in trouble with illness.,Public healthcare,dsfdsfsd,sdfsdfsd,dsfdsf,dsfsdfsd,Skipped
+,,my card got blocked.,Child safety,Pool,Child
+,,my card got blocked.,Child safety,Pool,Child
+,,my card got blocked seems suspicious,Cyber crime incident,Not provided,"User's credit card was blocked, which could be a sign of fraudulent activity."
+,,my card got blocked seems suspicious,Cyber crime incident,dsadsa,Skipped,Skipped,Skipped,Skipped,Skipped
+,,"i girlfriend is in bad mood , she is carying a gun and locked herself in a room.",women help desk,home,"girlfriend carrying a gun, locked herself in a room."
+,,my girlfiend locked herself in a room and she is also carying a gun.,murder / serious crime incident,Home,"Girlfriend is carrying a gun and has locked herself in a room, which may indicate a potential threat or a serious crime incident. It is recommended to contact local law enforcement immediately for assistance and ensure everyone's safety."
+,,my girlfiend locked herself in a room and she is also carying a gun.,murder / serious crime incident,efdsfsd,dsfsdfs,dsfsdf,Skipped,Skipped,Skipped
+,,my child is not safe.,,,
+,,my child is not safe.,Child Safety,home or specific location mentioned by user,child's safety concern.
+,,my child is not safe.,child safety,Not provided in the query,The user has expressed concern for their child's safety.
+,,my child is not safe.,child safety,sdfdsf,dsfdsf,sdfdsf,dsfsdfsdf,dsfsdfsd
+,,my card got blocked.,cyber crime incident,User's current location (from GPS if available) or home location (if provided),"Card type, date of incident, time of incident, and any other relevant information about the incident."
+,,my card got blocked.,cyber crime incident,adasdasd,sadsad,asdasdas,sadasdasd,sadasdasd,sadasdasd
+,,i need help for my mother.,women help desk,Home,mother in need of help.
+,,i need help for my mother.,women help desk,Home,mother in need of help.
+,,i need help for my mother.,women help desk,dsfsd,dsfsdf,dsfsdf,dsfsdf,dsfsdf
+,,my card got blocked.,cyber crime incident,User's current location (from GPS if available) or home location (if provided),"Card type, date of incident, time of incident, and any other relevant information about the incident."
+,,i need help for my mother.,women help desk,Home,mother in need of help.
+,,my card got blocked.,cyber crime incident,dsfsdf,dsfdsf,dsfsdf,dsfsdf,dsfsdfsd,Skipped
+,,i need help for my mother.,women help desk,Home,mother in need of help.
+,,i need help for my mother.,women help desk,ssdfds,sdfsdf,sdfsdfsd,sdfsdfsdf,sdfsdfsdf
+,,my child is not safe.,child safety,Not provided in the query,The user has expressed concern for their child's safety.
+,,i need help for my mother.,women help desk,Home,mother in need of help.
+,,i need help for my mother.,women help desk,dsfsdf,sdfsdfs,dsfsdfs,dsfsdfsdf,sdfsdf
+,,my daughter is in trouble.,women help desk,"Home or near the user's location, depending on the context of the situation.",daughter in trouble.
+,,my daughter is in trouble.,women help desk,dsfdsf,Skipped,dsfsdfsdf,dsfsdfsdf,dsfdsfsdf
+,,my card got blocked.,cyber crime incident,User's current location (from GPS if available) or home location (if provided),"Card type, date of incident, time of incident, and any other relevant information about the incident."
+,,my card got blocked.,cyber crime incident,dsfsdf,sdfsdfsdf,sdfsdfsdfsdf,dsfdsfsdf,dsfsdfsdf,dsfdsfsdf

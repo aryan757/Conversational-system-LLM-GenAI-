@@ -17,19 +17,17 @@ if 'chat_history' not in st.session_state:
     st.session_state.chat_history = []
     st.session_state.follow_up_index = 0
     st.session_state.follow_up_responses = {}
-    st.session_state.intent_classification = None
-    st.session_state.location = None
-    st.session_state.other_details = None
 
+# Define follow-up questions with all lowercase keys
 follow_up_questions = {
-    "Child safety": [
+    "child safety": [
         "Child's name",
         "Child's age",
         "Description of clothing last worn",
         "Last known location and time",
         "Any known associates or suspects"
     ],
-    "Cyber crime incident": [
+    "cyber crime incident": [
         "Type of cyber crime",
         "Description of the incident",
         "Date and time of the incident",
@@ -37,21 +35,21 @@ follow_up_questions = {
         "Account number (if bank involved)(Optional)",
         "Bank details (Name,Branch,IFSC code.)(Optional)"
     ],
-    "Women help desk": [
+    "women help desk": [
         "Nature of the incident",
         "Time and location of the incident",
         "Description of the perpetrator",
         "Immediate support needed",
         "Any witnesses or evidence available"
     ],
-    "Public healthcare": [
+    "public healthcare": [
         "Type of health concern",
         "Number of people affected",
         "Location of the healthcare issue",
         "Urgency of the situation",
         "Availability of medical assistance"
     ],
-    "Road accident": [
+    "road accident": [
         "Location of the accident",
         "Time of the accident",
         "Vehicles involved",
@@ -66,14 +64,14 @@ follow_up_questions = {
         "Suspect information",
         "Evidence or leads"
     ],
-    "Fire accident": [
+    "fire accident": [
         "Location of the fire",
         "Time the fire started",
         "Known cause of the fire",
         "Injuries or fatalities",
         "Current status of the fire"
     ],
-    "issue recorded":[
+    "issue recorded": [
         "Description of the incident",
         "Timing",
         "Help needed (Yes/No)",
@@ -101,12 +99,12 @@ def analyze_query(user_query, user_name, user_phone):
         Analyze the sentiment and content of the following user query. Classify the incident into one of the specified categories and extract relevant entities, including the location:
 
         Categories:
-        - Cyber crime incident
-        - Women help desk
-        - Public healthcare
-        - Fire accident
-        - Road accident
-        - Child safety
+        - cyber crime incident
+        - women help desk
+        - public healthcare
+        - fire accident
+        - road accident
+        - child safety
         - murder / serious crime incident
 
         Instructions:
@@ -134,25 +132,27 @@ def analyze_query(user_query, user_name, user_phone):
     return result
 
 def display_follow_up_questions(intent_classification):
+    # Convert intent classification to lowercase
+    intent_classification = intent_classification.lower()
+
     if intent_classification in follow_up_questions:
         questions = follow_up_questions[intent_classification]
 
-        # Only proceed if there are more questions to ask
         if st.session_state.follow_up_index < len(questions):
             question = questions[st.session_state.follow_up_index]
-            st.write(f"Bot: {question}")
+            st.session_state.chat_history.append(message(f"🤖 {question}", is_user=False))
+            st.write(f"🤖 {question}")
+            
             user_input = st.text_input("You:", key=f"follow_up_{intent_classification}_{question}")
+            skip_question = st.button("Skip", key=f"skip_{intent_classification}_{question}")
 
-            if user_input:
-                st.session_state.follow_up_responses[question] = user_input
-                st.session_state.chat_history.append(message(user_input, is_user=True))
-                st.session_state.chat_history.append(message(question, is_user=False))
+            if user_input or skip_question:
+                response = user_input if user_input else "Skipped"
+                st.session_state.follow_up_responses[question] = response
+                st.session_state.chat_history.append(message(response, is_user=True))
                 st.session_state.follow_up_index += 1
-
-                # Reset the input box so the next question can be asked
                 st.experimental_rerun()
 
-        # If all questions have been asked, return the responses
         if st.session_state.follow_up_index == len(questions):
             return st.session_state.follow_up_responses
     else:
@@ -162,27 +162,24 @@ def display_follow_up_questions(intent_classification):
 # Streamlit front-end
 st.title("Police सेवा portal System (Conversational)")
 
-
-
 # Display greeting message
 if not st.session_state.chat_history:
-    st.session_state.chat_history.append(message("Hello! Welcome to the Police सेवा portal System. How can I assist you today?", is_user=False))
+    st.session_state.chat_history.append(message("🤖 Hello! Welcome to the Police सेवा portal System. How can I assist you today?", is_user=False))
 
 # Display chat history
 for chat_message in st.session_state.chat_history:
-    st.write(chat_message)
+    if chat_message is not None and chat_message.content.strip():
+        st.write(chat_message)
 
 # Input from user
-user_input = st.text_input("You:", key="user_input",on_change = None)
+user_input = st.text_input("You:", key="user_input")
 
 # Option for User Anonymity
 anonymous_option = st.checkbox("Keep my identity and information anonymous")
-
-# Image upload option (clearly marked as optional)
-st.subheader("Upload an Image (Optional)")
-st.text("If you have an image related to the incident, you can upload it here. This step is optional.")
-uploaded_image = st.file_uploader("", type=["jpg", "png", "jpeg"])
-
+with st.sidebar:
+    st.subheader("Upload an Image (Optional)")
+    st.text("If you have an image related to the incident, you can upload it here. This step is optional.")
+    uploaded_image = st.file_uploader("", type=["jpg", "png", "jpeg"])
 
 if user_input and not st.session_state.get('intent_classification'):
     st.session_state.chat_history.append(message(user_input, is_user=True))
@@ -195,7 +192,7 @@ if user_input and not st.session_state.get('intent_classification'):
                 st.error("Failed to save image.")
 
         result = analyze_query(user_input, "", "")
-        st.session_state.chat_history.append(message(result, is_user=False))
+        st.session_state.chat_history.append(message(f"🤖 {result}", is_user=False))
 
         intent_classification = None
         location = None
@@ -203,7 +200,7 @@ if user_input and not st.session_state.get('intent_classification'):
 
         for line in result.split("\n"):
             if "Intent Classification:" in line:
-                intent_classification = line.split(": ")[-1].strip()
+                intent_classification = line.split(": ")[-1].strip().lower()
             elif "Location:" in line:
                 location = line.split(": ")[-1].strip()
             elif "Other Details:" in line:
@@ -214,16 +211,19 @@ if user_input and not st.session_state.get('intent_classification'):
         st.session_state.location = location
         st.session_state.other_details = other_details
 
+        # Prepare CSV row data
+        csv_row = [
+            "", "", user_input,
+            st.session_state.intent_classification or "",
+            st.session_state.location or "",
+            st.session_state.other_details or ""
+        ]
+
         # Write data to CSV file
         csv_filename = "anonymous_data.csv" if anonymous_option else "user_data.csv"
         with open(csv_filename, mode='a', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow([
-                "", "", user_input,
-                st.session_state.intent_classification,
-                st.session_state.location,
-                st.session_state.other_details
-            ])
+            writer.writerow(csv_row)
         st.success("Data successfully saved to CSV file.")
 
         # If an intent classification is present, start displaying follow-up questions
@@ -232,31 +232,29 @@ if user_input and not st.session_state.get('intent_classification'):
 
     except ValueError as e:
         st.error(e)
-elif st.session_state.get('intent_classification'):
-    # Continue asking follow-up questions or conclude the conversation
-    if st.session_state.follow_up_index < len(follow_up_questions[st.session_state.intent_classification]):
-        # Continue asking follow-up questions
-        display_follow_up_questions(st.session_state.intent_classification)
-    else:
-        # All follow-up questions have been answered
-        follow_up_responses = st.session_state.follow_up_responses
-        # Write follow-up data to CSV file
-        csv_filename = "anonymous_data.csv" if anonymous_option else "user_data.csv"
-        with open(csv_filename, mode='a', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow([
-                "", "", user_input,
-                st.session_state.intent_classification,
-                *follow_up_responses.values()
-            ])
-        st.success("Follow-up data successfully saved to CSV file.")
-        st.success("Thank you for providing the necessary details. We will look into the matter and take appropriate action.")
-        # Reset follow-up state for the next conversation
-        st.session_state.follow_up_index = 0
-        st.session_state.follow_up_responses = {}
-        st.session_state.intent_classification = None
-        st.session_state.location = None
-        st.session_state.other_details = None
+elif st.session_state.get('intent_classification') and st.session_state.follow_up_index < len(follow_up_questions[st.session_state.intent_classification]):
+    # Continue asking follow-up questions
+    display_follow_up_questions(st.session_state.intent_classification)
+elif st.session_state.get('intent_classification') and st.session_state.follow_up_index >= len(follow_up_questions[st.session_state.intent_classification]):
+    # All follow-up questions have been answered
+    follow_up_responses = st.session_state.follow_up_responses
+    # Prepare follow-up CSV row data
+    follow_up_csv_row = [
+        "", "", user_input,
+        st.session_state.intent_classification or "",
+        *follow_up_responses.values()
+    ]
+    # Write follow-up data to CSV file
+    csv_filename = "anonymous_data.csv" if anonymous_option else "user_data.csv"
+    with open(csv_filename, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(follow_up_csv_row)
+    st.success("Follow-up data successfully saved to CSV file.")
+    st.success("Thank you for providing the necessary details. We will look into the matter and take appropriate action.")
+    # Reset follow-up state for the next conversation
+    st.session_state.follow_up_index = 0
+    st.session_state.follow_up_responses = {}
+    st.session_state.intent_classification = None
 else:
-    if user_input:  # If there's user input but no intent classification
-        st.write("Bot: Please provide some information about the incident you'd like to report.")
+    st.success("Thank you for reaching out. We appreciate you reporting this incident.")
+
