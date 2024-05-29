@@ -1,6 +1,5 @@
 import streamlit as st
 from streamlit_chat import message
-import csv
 from langchain.chains import LLMChain
 from langchain.llms import HuggingFaceHub
 from langchain.prompts import PromptTemplate
@@ -9,13 +8,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Ensure the 'uploaded_images' directory exists
-os.makedirs("uploaded_images", exist_ok=True)
-
-# Initialize session state
-if 'chat_history' not in st.session_state:
-    st.session_state.chat_history = []
-
+# Define follow-up questions for each intent classification
 follow_up_questions = {
     "Child safety": [
         "Child's name",
@@ -32,196 +25,108 @@ follow_up_questions = {
         "Account number (if bank involved)(Optional)",
         "Bank details (Name,Branch,IFSC code.)(Optional)"
     ],
-    "Women help desk": [
-        "Nature of the incident",
-        "Time and location of the incident",
-        "Description of the perpetrator",
-        "Immediate support needed",
-        "Any witnesses or evidence available"
-    ],
-    "Public healthcare": [
-        "Type of health concern",
-        "Number of people affected",
-        "Location of the healthcare issue",
-        "Urgency of the situation",
-        "Availability of medical assistance"
-    ],
-    "Road accident": [
-        "Location of the accident",
-        "Time of the accident",
-        "Vehicles involved",
-        "Injuries or fatalities",
-        "Witnesses or available surveillance footage"
-    ],
-    "murder / serious crime incident": [
-        "Description of the incident",
-        "Date and time of the incident",
-        "Location of the incident",
-        "Victim information",
-        "Suspect information",
-        "Evidence or leads"
-    ],
-    "Fire accident": [
-        "Location of the fire",
-        "Time the fire started",
-        "Known cause of the fire",
-        "Injuries or fatalities",
-        "Current status of the fire"
-    ],
-    "issue recorded":[
-        "Description of the incident",
-        "Timing",
-        "Help needed (Yes/No)",
-        "current location"
-    ]
+    # Add more intent classifications and their respective follow-up questions
 }
 
-# Function to save uploaded file to local filesystem
-def save_uploaded_file(uploaded_file):
-    try:
-        with open(os.path.join("uploaded_images", uploaded_file.name), "wb") as f:
-            f.write(uploaded_file.getbuffer())
-        return True
-    except Exception as e:
-        st.error(f"An error occurred while saving the file: {e}")
-        return False
+# Initialize session state
+if 'chat_history' not in st.session_state:
+    st.session_state.chat_history = []
+    st.session_state.follow_up_index = 0
+    st.session_state.user_responses = []
+    st.session_state.intent_classification = None
 
-# Function to perform sentiment analysis and incident classification
-def analyze_query(user_query, user_name, user_phone):
+# Function to analyze the user query and classify the intent
+def analyze_query(user_query):
     api_token = os.getenv('HUGGINGFACEHUB_API_TOKEN')
     if not api_token:
         raise ValueError("Hugging Face API token not found in environment variables.")
 
     prompt_template = """
-        Analyze the sentiment and content of the following user query. Classify the incident into one of the specified categories and extract relevant entities, including the location:
+    Analyze the sentiment and content of the following "{user_query}". Classify the incident into one of the specified categories:
 
-        Categories:
-        - Cyber crime incident
-        - Women help desk
-        - Public healthcare
-        - Fire accident
-        - Road accident
-        - Child safety
-        - murder / serious crime incident
+    Categories:
+    - Cyber crime incident
+    - Child safety
+    - Other categories...
 
-        Instructions:
-        1. Determine the most appropriate category for the incident based on the sentiment and content of the user query, if failed to classify then give the response as "issue recorded"  
-        2. Identify and extract entities such as location, time, or individuals involved.
+    Instructions:
+    1. Determine the most appropriate category for the incident based on the sentiment and content of the user query.
 
-        User Name: "{user_name}"
-        User Phone: "{user_phone}"
-        User Query: "{user_query}"
 
-        Response Format:
+    Response Format:
 
-        - Intent Classification: 
-        - Extracted Entities:
-          - Location: 
-          - Other Details: 
+        Intent Classification:
+
     """
 
+    
     prompt = PromptTemplate.from_template(prompt_template)
     chain = LLMChain(
-        llm=HuggingFaceHub(repo_id='mistralai/Mistral-7B-Instruct-v0.2', model_kwargs={'temperature': 0.7, 'max_new_tokens': 250}),
+        llm=HuggingFaceHub(repo_id='mistralai/Mistral-7B-Instruct-v0.2', model_kwargs={'temperature': 0.1, 'max_new_tokens': 250}),
         prompt=prompt
     )
-    result = chain.run(user_query=user_query, user_name=user_name, user_phone=user_phone)
-    return result
-
-    
-def display_follow_up_questions(intent_classification):
-    if intent_classification in follow_up_questions:
-        questions = follow_up_questions[intent_classification]
-        follow_up_responses = {}
-
-        for i, question in enumerate(questions, start=1):
-            st.write(f"Question {i}:")
-            user_input = st.text_input(question, key=f"follow_up_{intent_classification}_{i}")
-
-            if user_input:
-                follow_up_responses[question] = user_input
-                st.session_state.chat_history.append(message(user_input, is_user=True))
-                st.session_state.chat_history.append(message(question))
-
-        if follow_up_responses:
-            return follow_up_responses
-        else:
-            st.warning("No follow-up questions answered.")
-            return {}
-    else:
-        st.warning("No follow-up questions for the given intent classification.")
-        return {}
-
+    result = chain.run(user_query=user_query)
+    intent_classification = result.split(": ")[-1].strip()
+    return intent_classification
 
 # Streamlit front-end
-st.title("Police सेवा portal System (Conversational)")
+st.title("Chatbot System")
 
 # Display greeting message
-st.session_state.chat_history.append(message("Hello! Welcome to the Police सेवा portal System. How can I assist you today?", is_user=False))
+if not st.session_state.chat_history:
+    st.session_state.chat_history.append(message("Hello! I'm a chatbot. Let's have a conversation.", is_user=False))
 
 # Display chat history
 for chat_message in st.session_state.chat_history:
     st.write(chat_message)
 
-# Input from user
-user_input = st.text_input("Your Query", key="user_input")
+# Get user query and classify intent
+user_query = st.text_input("You:", key="user_query")
 
-# Option for User Anonymity
-anonymous_option = st.checkbox("Keep my identity and information anonymous")
-
-# Image upload option (clearly marked as optional)
-st.subheader("Upload an Image (Optional)")
-st.text("If you have an image related to the incident, you can upload it here. This step is optional.")
-uploaded_image = st.file_uploader("", type=["jpg", "png", "jpeg"])
-
-if user_input:
-    st.session_state.chat_history.append(message(user_input, is_user=True))
+if user_query:
+    st.session_state.chat_history.append(message(user_query, is_user=True))
 
     try:
-        if uploaded_image is not None:
-            if save_uploaded_file(uploaded_image):
-                st.success("Image successfully saved.")
-            else:
-                st.error("Failed to save image.")
+        intent_classification = analyze_query(user_query)
+        st.session_state.intent_classification = intent_classification
+        st.session_state.chat_history.append(message(f"Intent Classification: {intent_classification}", is_user=False))
 
-        result = analyze_query(user_input, "", "")
-        st.session_state.chat_history.append(message(result))
+        # Display follow-up questions after intent classification
+        if st.session_state.intent_classification in follow_up_questions:
+            questions = follow_up_questions[st.session_state.intent_classification]
 
-        intent_classification = None
-        location = None
-        other_details = None
+            # Reset follow-up index if a new intent is classified
+            if st.session_state.follow_up_index >= len(questions):
+                st.session_state.follow_up_index = 0
+                st.session_state.user_responses = []
 
-        for line in result.split("\n"):
-            if "Intent Classification:" in line:
-                intent_classification = line.split(": ")[-1].strip()
+            if st.session_state.follow_up_index < len(questions):
+                question = questions[st.session_state.follow_up_index]
+                st.write(f"Bot: {question}")
+                user_response = st.text_input("You:", key=f"follow_up_{st.session_state.follow_up_index}")
 
-        # Write data to CSV file
-        csv_filename = "anonymous_data.csv" if anonymous_option else "user_data.csv"
-        with open(csv_filename, mode='a', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow([
-                "", "", user_input,
-                intent_classification, location, other_details
-            ])
-        st.success("Data successfully saved to CSV file.")
+                if user_response:
+                    st.session_state.chat_history.append(message(user_response, is_user=True))
+                    st.session_state.user_responses.append(user_response)
+                    st.session_state.follow_up_index += 1
 
-        # If an intent classification is present, display follow-up questions
-        if intent_classification and intent_classification in follow_up_questions:
-            follow_up_responses = display_follow_up_questions(intent_classification)
+                    # Check if there are more questions to ask and rerun for next question
+                    if st.session_state.follow_up_index < len(questions):
+                        st.experimental_rerun()
+                    else:
+                        st.success("Thank you for providing the necessary details.")
+                        st.write("Here are your responses:")
+                        for i, response in enumerate(st.session_state.user_responses):
+                            st.write(f"{i + 1}. {response}")
+                        st.write("Have a great day!")
+                        # Reset follow-up index and user responses for the next conversation
+                        st.session_state.follow_up_index = 0
+                        st.session_state.user_responses = []
 
-            # Write follow-up data to CSV file
-            if follow_up_responses:
-                with open(csv_filename, mode='a', newline='') as file:
-                    writer = csv.writer(file)
-                    writer.writerow([
-                        "", "", user_input,
-                        intent_classification,
-                        *follow_up_responses.values()
-                    ])
-                st.success("Follow-up data successfully saved to CSV file.")
-                st.success("Thank you for providing the necessary details. We will look into the matter and take appropriate action.")
-
-            else:
-                st.success("Thank you for reaching out. We appreciate you reporting this incident.")
     except ValueError as e:
         st.error(e)
+
+else:
+    if st.session_state.intent_classification is None:
+        # This message should only appear if no intent has been classified yet
+        st.write("Bot: I'm sorry, I couldn't classify your query into any known category. Please try rephrasing your concern.")
