@@ -327,3 +327,72 @@ prateek ,92439324234,my daughter is in trouble.,women help desk,Unknown (could b
 ,,my daughter is in trouble.,women help desk,dsfdsf,Skipped,dsfsdfsdf,dsfsdfsdf,dsfdsfsdf
 ,,my card got blocked.,cyber crime incident,User's current location (from GPS if available) or home location (if provided),"Card type, date of incident, time of incident, and any other relevant information about the incident."
 ,,my card got blocked.,cyber crime incident,dsfsdf,sdfsdfsdf,sdfsdfsdfsdf,dsfdsfsdf,dsfsdfsdf,dsfdsfsdf
+,,i need medical emergency.,public healthcare,Not provided in query. Please ask user to share location details for better assistance.,Medical emergency.
+,,i need medical emergency.,public healthcare,diabeties.,asdsad,Skipped,sadsad,Skipped
+,,i need medical emergency.,public healthcare,Not provided in query. Please ask user to share location details for better assistance.,Medical emergency.
+,,i see fire near my building.,fire accident,near user's building,user reported seeing a fire.
+,,i see fire near my building.,fire accident,delhi,rsdgsd,sgddsg,Skipped,Skipped
+,,my child needs help.,child safety,Not provided in the query,The user's child is in need of help.
+,,my child needs help.,child safety,aryan,24,Skipped,Skipped,Skipped
+,,i need medical emergency.,public healthcare,Not provided in query. Please ask user to share location details for better assistance.,Medical emergency.
+,,i need medical emergency.,public healthcare,dsdgggggggg,dgdggggggggggggggg,Skipped,Skipped,Skipped
+,,my child needs help.,child safety,Not provided in the query,The user's child is in need of help.
+,,my child needs help.,child safety,Not provided in the query,The user's child is in need of help.
+,,my child needs help.,child safety,aryan,Skipped,Skipped,Skipped,Skipped
+,,i need medical emergency.,public healthcare,Not provided in the query.,User is requesting medical emergency assistance.
+,,i need medical emergency.,public healthcare,sdfsdf,dsfsdf,dsfsdf,dsfsdf,dsfdsf
+,,i need help for my daughter.,women help desk,home,daughter
+,,i need help for my daughter.,women help desk,home,daughter
+,,i need help for my daughter.,women help desk,home,daughter
+,,i need medical emergency,issue recorded,N/A,User did not specify a category or location.
+,,i need medical emergency.,public healthcare,Not provided in the query.,User is requesting medical emergency assistance.
+,,i need medical emergency.,public healthcare,Not provided in the query.,User is requesting medical emergency assistance.
+,,i need medical emergency.,public healthcare,Not provided in the query.,User is requesting medical emergency assistance.
+,,i need medical emergency.,public healthcare,"sfsdfsdfdsf
+","erwerewrewr
+",efdsjkfdsjfiosdf,"resfk;ldkf;lksdfk;lk
+","fl,l;dsfl;fsfdl;ks"
+,,my child needs help.,child safety,home or specific location if provided by user,child in need of help.
+,,i need help for my mother.,issue recorded,Not provided,User needs help for their mother.
+,,i need help for my mother.,issue recorded,kghjkgjkg,jkhkjhkjhjkh,ihlihihou,jkgjkgkg
+,,i need help for my mother.,issue recorded,Not provided,User needs help for their mother.
+,,i need help for my mother.,issue recorded,sdfdfsd,sdfdsf,dsfdsfs,Skipped
+,,i need help for my mother.,issue recorded,Not provided,User needs help for their mother.
+,,my card got blocked.,,,
+,,i need help for my mother.,issue recorded,Not provided,User needs help for their mother.
+,,i need help for my mother.,issue recorded,sadsad,asdsad,asdasdas,asdsad
+,,i need help for my mother.,issue recorded,Not provided,User needs help for their mother.
+,,i need help for my mother.,issue recorded,dsfsd,sdfsdf,dsfsdfs,sdfsdf
+,,i need help for my mother.,issue recorded,Not provided,User needs help for their mother.
+,,i need help for my mother.,issue recorded,Not provided,User needs help for their mother.
+,,i need help for my mother.,issue recorded,Not provided,User needs help for their mother.
+,,i need help for my mother.,issue recorded,sdfsd,sdfsdf,sdfsd,Skipped
+,,my daughter is in trouble.,women help desk,daughter's location,in trouble. This query is indicative of a potential issue related to women safety and might require assistance from a women help desk or similar service.
+,,my daughter is in trouble.,women help desk,dsfdsf,sdfsdf,sdfsdfsdf,Skipped,Skipped
+,,my child is not safe.,child safety,home or specific address,"child's name, age, and any specific danger or threat mentioned in the query."
+,,my child is not safe.,child safety,sdfsdf,Skipped,Skipped,Skipped,Skipped
+,,my house catches fire.,,,
+,,my house catches fire.,,,
+,,my house catches fire.,,,
+,,my house catches fire.,,,
+,,i need help for my mother.,issue recorded,Not provided,User needs help for their mother.
+,,i need help for my mother.,issue recorded,sfsdfsdf,sdfsdf,sdfsdf,sdfsdfs
+,,my house catches fire near me,fire accident,my house,near me.
+,,my house catches fire near me,fire accident,sdasd,asdasda,Skipped,iuoi,oiuyoy
+,,i need help for my mother.,issue recorded,Not provided,User needs help for their mother.
+,,my house catches fire near me,fire accident,my house,near me.
+,,i need help for my mother.,issue recorded,ewewr,sdsada,sdfsdf,dsfsd
+,,my house catches fire today.,fire accident,User's house,Fire incident at the user's house.
+,,my daughter is in trouble.,women help desk,daughter's location,in trouble. This query is indicative of a potential issue related to women safety and might require assistance from a women help desk or similar service.
+,,my child is not safe.,child safety,home or specific address,"child's name, age, and any specific danger or threat mentioned in the query."
+,,my child is not safe.,child safety,home or specific address,"child's name, age, and any specific danger or threat mentioned in the query."
+,,my card got blocked.,,,
+,,my card got blocked seems suspicious.,cyber crime incident,New York City,"Card type (""Visa"" or ""Mastercard""), time of occurrence, and any other relevant information from the query. For example:"
+,,my card got blocked seems suspicious.,cyber crime incident,sdfsdf,asdasd,sdfsdf,sdfsdf,dsfsdf,dsfsdf
+,,my child is not safe.,child safety,home or specific address,"child's name, age, and any specific danger or threat mentioned in the query."
+,,my child is not safe.,child safety,sdfsdf,sdfsdf,sdfsdfsd,dsfsf,sdfsdf
+,,my daughter is in trouble.,women help desk,daughter's location,in trouble. This query is indicative of a potential issue related to women safety and might require assistance from a women help desk or similar service.
+,,my daughter is in trouble.,women help desk,gdgdgdfgfdgdfgdfgfdgdfgdfg,fdfgfdgfdgdfgd,fdgdfgdfgdf,dfgdfgdfgfg,xdgfdgdgdf
+,,my card got blocked.,,,
+,,my card got blocked seems suspicious.,cyber crime incident,New York City,"Card type (""Visa"" or ""Mastercard""), time of occurrence, and any other relevant information from the query. For example:"
+,,my card got blocked seems suspicious.,cyber crime incident,sdfsdf,sdfsdfsd,sdfsdfsd,sdfdsf,sdfdsf,dssdff
