@@ -204,7 +204,6 @@ if st.button("Analyze Query"):
                     user_name, user_phone, user_query,
                     intent_classification, location, other_details
                 ])
-                
             st.success("Data successfully saved to CSV file.")
             
             # If an intent classification is present, display follow-up questions
