@@ -10,7 +10,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Ensure the 'uploaded_images' directory exists
+
+# Ensure the 'uploaded_images' directory existsd
 os.makedirs("uploaded_images", exist_ok=True)
 
 # Initialize session state
