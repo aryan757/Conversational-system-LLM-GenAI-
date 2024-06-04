@@ -24,61 +24,60 @@ if 'chat_history' not in st.session_state:
 # Define follow-up questions with all lowercase keys
 follow_up_questions = {
     "child safety": [
-        "Child's name",
-        "Child's age",
-        "Description of clothing last worn",
-        "Last known location and time",
-        "Any known associates or suspects"
+      "What is the child's name?",
+      "How old is the child?",
+      "Can you describe the clothing the child was last seen wearing?",
+      "Where and when was the child last seen?",
+      "Are there any known associates or suspects involved?"
     ],
     "cyber crime incident": [
-        "Type of cyber crime",
-        "Description of the incident",
-        "Date and time of the incident",
-        "Any known suspects or source of the attack",
-        "Account number (if bank involved)(Optional)",
-        "Bank details (Name,Branch,IFSC code.)(Optional)"
+     "What type of cybercrime occurred?",
+      "Please describe the incident.",
+      "When did the incident occur?",
+      "Do you have any information about possible suspects or the source of the attack?",
+      "If applicable, what is the account number involved (optional)?",
+      "If applicable, what are the bank details (Name, Branch, IFSC code) (optional)?"
     ],
     "women help desk": [
-        "Nature of the incident",
-        "Time and location of the incident",
-        "Description of the perpetrator",
-        "Immediate support needed",
-        "Any witnesses or evidence available"
+      "What was the nature of the incident?",
+      "When and where did the incident occur?",
+      "Can you describe the perpetrator?",
+      "What immediate support is needed?",
+      "Are there any witnesses or evidence available?"
     ],
     "public healthcare": [
-        "Type of health concern",
-        "Number of people affected",
-        "Location of the healthcare issue",
-        "Urgency of the situation",
-        "Availability of medical assistance"
+      "What type of health concern is it?",
+      "How many people are affected?",
+      "Where is the healthcare issue located?",
+      "How urgent is the situation?",
+      "Is medical assistance available?"
     ],
     "road accident": [
-        "Location of the accident",
-        "Time of the accident",
-        "Vehicles involved",
-        "Injuries or fatalities",
-        "Witnesses or available surveillance footage"
+      "Where did the accident occur?",
+      "What time did the accident happen?",
+      "What vehicles were involved?",
+      "Were there any injuries or fatalities?",
+      "Are there any witnesses or available surveillance footage?"
     ],
     "murder / serious crime incident": [
-        "Description of the incident",
-        "Date and time of the incident",
-        "Location of the incident",
-        "Victim information",
-        "Suspect information",
-        "Evidence or leads"
+      "Can you describe the incident?",
+      "When and where did the incident occur?",
+      "What are the victim's details?",
+      "Do you have any information about the suspect(s)?",
+      "Are there any evidence or leads available?"
     ],
     "fire accident": [
-        "Location of the fire",
-        "Time the fire started",
-        "Known cause of the fire",
-        "Injuries or fatalities",
-        "Current status of the fire"
+      "Where did the fire occur?",
+      "When did the fire start?",
+      "Do you know the cause of the fire?",
+      "Were there any injuries or fatalities?",
+      "What is the current status of the fire?"
     ],
     "issue recorded": [
-        "Description of the incident",
-        "Timing",
-        "Help needed (Yes/No)",
-        "Current location"
+      "Can you describe the incident?",
+      "When did it happen?",
+      "Do you need help (Yes/No)?",
+      "Where are you currently located?"
     ]
 }
 
@@ -177,9 +176,10 @@ def display_message(chat_message):
     content = chat_message["content"]
 
     if role == "user":
-        st.markdown(f"<div style='text-align: right;'><b>You:</b> {content}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='text-align: right; margin-bottom: 20px;'><b>You:</b> {content}</div>", unsafe_allow_html=True)
     else:
-        st.markdown(f"<div style='text-align: left;'><b>🤖:</b> {content}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='text-align: left; margin-top: 20px;'><b>🤖:</b> {content}</div>", unsafe_allow_html=True)
+
 
 # Streamlit front-end
 st.title("Police सेवा Portal System (Conversational)")
